@@ -1,5 +1,4 @@
 #summary OpenCL compiler optimization options
-#sidebar TableOfContents
 
 || -cl-opt-disable || This option disables all optimizations. The default is optimizations are enabled. ||
 || -cl-strict-aliasing || This option allows the compiler to assume the strictest aliasing rules. ||
