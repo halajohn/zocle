@@ -2,8 +2,12 @@
 
 These options control compiler behavior regarding floating-point arithmetic. These options trade off between speed and correctness.
 
-* -cl-single-precision-constant Treat double precision floating-point constant as single precision constant.
-* -cl-denorms-are-zero This option controls how single precision and double precision denormalized numbers are handled. If specified as a build option, the single precision denormalized numbers may be flushed to zero and if the optional extension for double precision is supported, double precision denormalized numbers may also be flushed to zero. This is intended to be a *performance hint* and the OpenCL compiler can choose *not* to flush denorms to zero if the device supports single precision (or double precision) denormalized numbers.
+  * -cl-single-precision-constant
+Treat double precision floating-point constant as single precision constant.
+
+  * -cl-denorms-are-zero
+
+This option controls how single precision and double precision denormalized numbers are handled. If specified as a build option, the single precision denormalized numbers may be flushed to zero and if the optional extension for double precision is supported, double precision denormalized numbers may also be flushed to zero. This is intended to be a *performance hint* and the OpenCL compiler can choose *not* to flush denorms to zero if the device supports single precision (or double precision) denormalized numbers.
 
 This option is ignored for single precision numbers if the device does not support single
 precision denormalized numbers i.e. CL_FP_DENORM bit is not set in CL_DEVICE_SINGLE_FP_CONFIG.
