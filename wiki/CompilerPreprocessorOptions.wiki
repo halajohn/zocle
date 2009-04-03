@@ -1,2 +1,2 @@
 #summary OpenCL compiler preprocessor options
-|| -D || name || Predefine name as a macro, with definition 1.
+|| -D || name || Predefine name as a macro, with definition 1. ||
