@@ -1,7 +1,8 @@
 #summary One-sentence summary of this page.
 
-* Compiler preprocessor options
-  * [CompilerPreprocessorOptions]
-  * [CompilerMathIntrinsicsOptions]
-  * [CompilerOptimizationOptions]
-  * [CompilerWarningOptions]
+* MainPage
+  * Compiler preprocessor options
+    * [CompilerPreprocessorOptions]
+    * [CompilerMathIntrinsicsOptions]
+    * [CompilerOptimizationOptions]
+    * [CompilerWarningOptions]
