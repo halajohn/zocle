@@ -1,5 +1,4 @@
-#summary zocle MainPage
-#sidebar TableOfContents
+#summary zocle (Z OpenCL Environment)
 
 = Introduction =
 
