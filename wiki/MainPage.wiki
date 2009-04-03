@@ -1,4 +1,5 @@
 #summary zocle MainPage
+#sidebar TableOfContents
 
 = Introduction =
 
