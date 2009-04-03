@@ -1,4 +1,5 @@
 #summary OpenCL compiler math intrinsics options
+#sidebar TableOfContents
 
 These options control compiler behavior regarding floating-point arithmetic. These options trade off between speed and correctness.
 
