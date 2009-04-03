@@ -1,3 +1,4 @@
 #summary OpenCL compiler preprocessor options
 || -D name || Predefine name as a macro, with definition 1. ||
 || -D name=definition || The contents of definition are tokenized and processed as if they appeared during translation phase three in a `#define' directive. In particular, the definition will be truncated by embedded newline characters. ||
+|| options are processed in the order they are given in the options argument to clBuildProgram. ||
