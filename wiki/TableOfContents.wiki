@@ -1,7 +1,7 @@
 #summary One-sentence summary of this page.
 
 * MainPage
-  * Compiler preprocessor options
+  * [CompilerOptions Compiler preprocessor options]
     * [CompilerPreprocessorOptions]
     * [CompilerMathIntrinsicsOptions]
     * [CompilerOptimizationOptions]
