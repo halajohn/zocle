@@ -11,10 +11,10 @@ These options control compiler behavior regarding floating-point arithmetic. The
   This option is ignored for single precision numbers if the device does not support single
 precision denormalized numbers i.e. CL_FP_DENORM bit is not set in CL_DEVICE_SINGLE_FP_CONFIG.
 
-This option is ignored for double precision numbers if the device does not support double
+  This option is ignored for double precision numbers if the device does not support double
 precision or if it does support double precison but CL_FP_DENORM bit is not set in
 CL_DEVICE_DOUBLE_FP_CONFIG.
 
-This flag only applies for scalar and vector single precision floating-point variables and
+  This flag only applies for scalar and vector single precision floating-point variables and
 computations on these floating-point variables inside a program. It does not apply to
 reading from or writing to image objects.
