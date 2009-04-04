@@ -1,6 +1,8 @@
 #summary One-sentence summary of this page.
 
   * [MainPage MainPage]
+    * [DataType Data type]
+      * [BuiltInScalarDataType Built-in scalar type]
     * [DesignDecision Design decision]
     * [CompilerOptions Compiler options]
       * [CompilerPreprocessorOptions Preprocessor]
