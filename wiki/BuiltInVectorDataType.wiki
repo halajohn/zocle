@@ -1,11 +1,11 @@
 #summary Built-in vector data type
 
-|| char_n_ ||
-|| uchar_n_ ||
-|| short_n_ ||
-|| ushort_n_ ||
-|| int_n_ ||
-|| uint_n_ ||
-|| long_n_ ||
-|| ulong_n_ ||
-|| float_n_ ||
+|| char _n_ ||
+|| uchar _n_ ||
+|| short _n_ ||
+|| ushort _n_ ||
+|| int _n_ ||
+|| uint _n_ ||
+|| long _n_ ||
+|| ulong _n_ ||
+|| float _n_ ||
