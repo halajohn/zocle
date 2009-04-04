@@ -1,18 +1,19 @@
 #summary Built-in scalar data type
 
-|| bool ||
-|| char ||
-|| unsigned char, uchar ||
-|| short ||
-|| unsigned short, ushort ||
-|| int ||
-|| unsigned int, uint ||
-|| long ||
-|| unsigned long, ulong ||
-|| float ||
-|| half ||
-|| size_t ||
-|| ptrdiff_t ||
-|| intptr_t ||
-|| uintptr_t ||
-|| void ||
+|| Type in OpenCL Language || API type for application ||
+|| bool || n/a ||
+|| char || cl_char ||
+|| unsigned char, uchar || cl_uchar ||
+|| short || cl_short ||
+|| unsigned short, ushort || cl_ushort ||
+|| int || cl_int ||
+|| unsigned int, uint || cl_uint ||
+|| long || cl_long ||
+|| unsigned long, ulong || cl_ulong ||
+|| float || cl_float ||
+|| half || cl_half ||
+|| size_t || n/a ||
+|| ptrdiff_t || n/a ||
+|| intptr_t || n/a ||
+|| uintptr_t || n/a ||
+|| void || void ||
