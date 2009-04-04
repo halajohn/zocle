@@ -1,0 +1,15 @@
+#summary Reserved data type
+
+|| booln ||
+|| double, doublen ||
+|| halfn ||
+|| quad, quadn ||
+|| complex half, complex halfn, imaginary half, imaginary halfn ||
+|| complex float, complex floatn, imaginary halr, imaginary halfn ||
+|| complex double, complex doublen, imaginary double, imaginary doublen ||
+|| complex quad, complex quadn, imaginary quad, imaginary quadn ||
+|| floatnxm ||
+|| doublenxm ||
+|| long double, long doublen ||
+|| long long, long longn ||
+|| unsigned long long, ulong long, ulong long n ||
