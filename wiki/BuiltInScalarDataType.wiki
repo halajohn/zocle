@@ -1,0 +1,18 @@
+#summary Built-in scalar data type
+
+|| bool ||
+|| char ||
+|| unsigned char, uchar ||
+|| short ||
+|| unsigned short, ushort ||
+|| int ||
+|| unsigned int, uint ||
+|| long ||
+|| unsigned long, ulong ||
+|| float ||
+|| half ||
+|| size_t ||
+|| ptrdiff_t ||
+|| intptr_t ||
+|| uintptr_t ||
+|| void ||
