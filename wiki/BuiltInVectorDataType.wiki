@@ -1,13 +1,14 @@
 #summary Built-in vector data type
 
-|| charn ||
-|| ucharn ||
-|| short n ||
-|| ushortn ||
-|| intn ||
-|| uintn ||
-|| longn ||
-|| ulongn ||
-|| floatn ||
+|| Type in OpenCL Language || API type for application ||
+|| charn || cl_charn ||
+|| ucharn || cl_ucharn ||
+|| short n || cl_shortn ||
+|| ushortn || cl_ushortn ||
+|| intn || cl_intn ||
+|| uintn || cl_uintn ||
+|| longn || cl_longn ||
+|| ulongn || cl_ulongn ||
+|| floatn || cl_floatn ||
 
 Supported values of n are 2, 4, 8, and 16.
