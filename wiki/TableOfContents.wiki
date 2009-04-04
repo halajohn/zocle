@@ -3,6 +3,7 @@
   * [MainPage MainPage]
     * [DataType Data type]
       * [BuiltInScalarDataType Built-in scalar type]
+      * [BuiltInVectorDataType Built-in vector type]
     * [DesignDecision Design decision]
     * [CompilerOptions Compiler options]
       * [CompilerPreprocessorOptions Preprocessor]
