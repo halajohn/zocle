@@ -1,3 +1,3 @@
 #summary Alignment of data type
 
-A data item declared to be a data type in memory is always aligned to the size of the data type in bytes. For example, a float4 variable will be aligned to a 16-byte boundary, a char2 variable will be aligned to a 2-byte boundary.
+A data item declared to be a data type in memory is always aligned to the size of the data type in bytes.
