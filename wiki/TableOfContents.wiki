@@ -15,5 +15,6 @@
       * [OtherBuiltInDataType Other built-in type]
       * [ReservedDataType Reserved type]
       * [Image2d3d image2d_t, image3d_t]
+      * [Sampler sampler]
     * [Operators Operators]
     * [lvalues lvalues]
