@@ -8,8 +8,8 @@
 || Vector indices || Ex: {{{ a.xyzw = f.s0123; }}} ||
 || .odd, .even || ||
 || .hi, .lo || ||
-|| convert_<dest type name>(srctype) || ||
-|| destType convert_destType`<``_`sat`>``<``_`roundingMode`>`(sourceType) || Scalar version ||
+|| convert`_`<dest type name>(srctype) || ||
+|| destType convert`_`destType`<``_`sat`>``<``_`roundingMode`>`(sourceType) || Scalar version ||
 || destTypen convert_destTypen`<``_`sat`>``<``_`roundingMode`>`(sourceTypen) || Vector version ||
 || Floating-point rounding mode || `_`rte, `_`rtz, `_`rtp, `_`rtn ||
 || Reinterpreting types using Unions || ||
@@ -17,3 +17,5 @@
 || as`_``<`destType`>`_n_() || Vector version ||
 || Address space qualifier || `_``_`global, `_``_`local, `_``_`constant, `_``_`private ||
 || Image access qualifier || `_``_`read`_`only, `_``_`write`_`only ||
+|| Function qualifiers || `_``_`kernel ||
+|| `_``_`attribute`_``_`((vec`_`type`_`hint(`<``type`_n_`>`))) || ||
