@@ -21,3 +21,14 @@
 || `_``_`attribute`_``_`((vec`_`type`_`hint(`<``type`_n_`>`))) || ||
 || `_``_`attribute`_``_`((work`_`group`_`size`_`hint(X, Y, Z))) || ||
 || `_``_`attribute`_``_`((reqd`_`group`_`size`_`hint(X, Y, Z))) || ||
+
+  * preprocessor relative
+
+|| #pragma ||
+|| `_``_`FILE`_``_` ||
+|| `_``_`LINE`_``_` ||
+|| `_``_`OPENCL`_`VERSION`_``_` ||
+|| `_``_`ENDIAN`_`LITTLE`_``_` ||
+|| `_``_`ROUNDING_MODE`_``_` ||
+|| `_``_`IMAGE`_`SUPPORT`_``_` ||
+|| `_``_`FAST`_`RELAXED`_`MATH`_``_` ||
