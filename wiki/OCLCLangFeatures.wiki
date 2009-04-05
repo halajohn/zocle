@@ -15,4 +15,4 @@
 || Reinterpreting types using Unions || ||
 || as`_``<`destType`>`() || Scalar version ||
 || as`_``<`destType`>`_n_() || Vector version ||
-|| __global, __local, __constant, __private || ||
+|| `_``_`global, `_``_`local, `_``_`constant, `_``_`private || ||
