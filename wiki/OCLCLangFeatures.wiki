@@ -1,0 +1,12 @@
+#summary OpenCL C programming language features
+
+|| const || This qualifier cannot be used with image2d_t and image3d_t type. ||
+|| restrict || This qualifier cannot be used with image2d_t and image3d_t type. Types other than pointer types shall not use the restrict qualifier. ||
+|| volatile || This qualifier cannot be used with image2d_t and image3d_t type. ||
+|| Vector literals || Ex: {{{ float4 f = (float4)(1.0f, 2.0f, 3.0f, 4.0f); }}} ||
+|| Vector components || Like OpenGL shading language. Ex: {{{ c.xy = (float2)(3.0f, 4.0f); }}} ||
+|| Vector indices || Ex: {{{ a.xyzw = f.s0123; }}} ||
+|| .odd, .even || ||
+|| .hi, .lo || Ex: {{{ float4 vf;
+float2 low = vf.lo; // returns vf.xy
+float2 high = vf.hi; // returns vf.zw }}} ||
