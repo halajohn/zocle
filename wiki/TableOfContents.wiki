@@ -3,6 +3,7 @@
   * [MainPage MainPage]
     * [DesignDecision Design decision]
     * [BuildEnvironment Build environment]
+    * [SupportedFeatures Supported features]
     * [DataType Data type]
       * [BuiltInScalarDataType Built-in scalar type]
       * [BuiltInVectorDataType Built-in vector type]
