@@ -16,4 +16,4 @@
 || unary operator: *, & || ||
 || = || ||
 || +=, -=, *=, /=, %=, <<=, >>=, &=, |=, ^= || ||
-|| array subscript operator: [] || ||
+|| array subscript operator: `[``]` || ||
