@@ -18,5 +18,6 @@
         * [ReservedDataType Reserved type]
         * [Image2d3d image2d_t, image3d_t]
         * [Sampler sampler]
+      * [BuiltInFunctions Built-in functions]
       * [Operators Operators]
       * [lvalues lvalues]
