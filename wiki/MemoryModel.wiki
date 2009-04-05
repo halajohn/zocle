@@ -1,0 +1,3 @@
+#summary OpenCL memory model
+
+[http://picasaweb.google.com/lh/photo/cYvKOF5dwIagLW35WGehRQ?feat=directlink]
