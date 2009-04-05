@@ -4,6 +4,7 @@
     * [DesignDecision Design decision]
     * [BuildEnvironment Build environment]
     * [OCLCLangFeatures OpenCL C language features]
+    * [OCLCLangUnsupportedFeatures OpenCL C language unsupported features]
     * [CompilerOptions Compiler options]
       * [CompilerPreprocessorOptions Preprocessor]
       * [CompilerMathIntrinsicsOptions Math intrinsics]
