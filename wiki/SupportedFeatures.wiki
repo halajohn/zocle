@@ -1,6 +1,0 @@
-#summary Supported OpenCL C programming language features
-
-|| const || This qualifier cannot be used with image2d_t and image3d_t type. ||
-|| restrict || This qualifier cannot be used with image2d_t and image3d_t type. Types other than pointer types shall not use the restrict qualifier. ||
-|| volatile || This qualifier cannot be used with image2d_t and image3d_t type. ||
-|| Vector literals || Ex: {{{ float4 f = (float4)(1.0f, 2.0f, 3.0f, 4.0f); }}} ||
