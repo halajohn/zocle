@@ -8,6 +8,7 @@
       * [BuiltInVectorDataType Built-in vector type]
       * [OtherBuiltInDataType Other built-in type]
       * [ReservedDataType Reserved type]
+      * [Alignment Alignment]
     * [CompilerOptions Compiler options]
       * [CompilerPreprocessorOptions Preprocessor]
       * [CompilerMathIntrinsicsOptions Math intrinsics]
