@@ -9,6 +9,6 @@
 || .odd, .even || ||
 || .hi, .lo || ||
 || convert_<dest type name>(srctype) || ||
-|| destType convert_destType`<`_sat`>``<`_roundingMode`>`(sourceType) || Scalar version ||
-|| destTypen convert_destTypen`<`_sat`>``<`_roundingMode`>`(sourceTypen) || Vector version ||
-|| Floating-point rounding mode || _rte, _rtz, _rtp, _rtn ||
+|| destType convert_destType`<``_`sat`>``<``_`roundingMode`>`(sourceType) || Scalar version ||
+|| destTypen convert_destTypen`<``_`sat`>``<``_`roundingMode`>`(sourceTypen) || Vector version ||
+|| Floating-point rounding mode || `_`rte, `_`rtz, `_`rtp, `_`rtn ||
