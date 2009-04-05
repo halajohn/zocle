@@ -15,4 +15,4 @@
 || Reinterpreting types using Unions || ||
 || as`_``<`destType`>`() || Scalar version ||
 || as`_``<`destType`>`_n_() || Vector version ||
-|| `_``_`global, `_``_`local, `_``_`constant, `_``_`private || ||
+|| Address space qualifier || `_``_`global, `_``_`local, `_``_`constant, `_``_`private ||
