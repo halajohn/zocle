@@ -1,7 +1,7 @@
 #summary Built-in vector data type
 
 || Type in OpenCL Language || API type for application ||
-|| charn || cl_charn ||
+|| `char`_n_ || cl_charn ||
 || ucharn || cl_ucharn ||
 || short n || cl_shortn ||
 || ushortn || cl_ushortn ||
