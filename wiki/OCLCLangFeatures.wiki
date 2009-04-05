@@ -19,3 +19,4 @@
 || Image access qualifier || `_``_`read`_`only, `_``_`write`_`only ||
 || Function qualifiers || `_``_`kernel ||
 || `_``_`attribute`_``_`((vec`_`type`_`hint(`<``type`_n_`>`))) || ||
+|| `_``_`attribute`_``_`((work`_`group`_`size`_`hint(X, Y, Z))) || ||
