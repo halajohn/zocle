@@ -20,3 +20,4 @@
 || Function qualifiers || `_``_`kernel ||
 || `_``_`attribute`_``_`((vec`_`type`_`hint(`<``type`_n_`>`))) || ||
 || `_``_`attribute`_``_`((work`_`group`_`size`_`hint(X, Y, Z))) || ||
+|| `_``_`attribute`_``_`((reqd`_`group`_`size`_`hint(X, Y, Z))) || ||
