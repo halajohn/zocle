@@ -14,5 +14,6 @@
       * [BuiltInVectorDataType Built-in vector type]
       * [OtherBuiltInDataType Other built-in type]
       * [ReservedDataType Reserved type]
+      * [Image2d3d image2d_t, image3d_t]
     * [Operators Operators]
     * [lvalues lvalues]
