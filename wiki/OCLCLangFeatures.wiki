@@ -8,3 +8,4 @@
 || Vector indices || Ex: {{{ a.xyzw = f.s0123; }}} ||
 || .odd, .even || ||
 || .hi, .lo || ||
+|| convert_<dest type name>(srctype) || ||
