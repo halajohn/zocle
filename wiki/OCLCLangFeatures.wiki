@@ -7,6 +7,4 @@
 || Vector components || Like OpenGL shading language. Ex: {{{ c.xy = (float2)(3.0f, 4.0f); }}} ||
 || Vector indices || Ex: {{{ a.xyzw = f.s0123; }}} ||
 || .odd, .even || ||
-|| .hi, .lo || Ex: {{{ float4 vf;
-float2 low = vf.lo; // returns vf.xy
-float2 high = vf.hi; // returns vf.zw }}} ||
+|| .hi, .lo || ||
