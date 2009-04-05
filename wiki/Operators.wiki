@@ -1,6 +1,6 @@
 #summary OpenCL C language operators
 
-|| Binary operators: +, -, *, / || ||
+|| Binary operators: +, -, `*`, / || ||
 || % || operates on builtin integer scalar and integer vector data types only. ||
 || Unary operators: +, - || ||
 || post-, pre-increment, decrement: ++, -- || Do no apply to the built-in scalar and vector *float* types ||
