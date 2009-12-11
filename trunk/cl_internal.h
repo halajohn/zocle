@@ -1,4 +1,4 @@
-/* zocle — Z OpenCL Environment
+/* zocle - Z OpenCL Environment
  * Copyright (C) 2009 Wei Hu <wei.hu.tw@gmail.com>
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -18,15 +18,26 @@
 #define ZOCLE_CL_INTERNAL_H_
 
 #include <cl.h>
-#include <cvector.h>
-
-DECLARE_CVECTOR(cl_mem)
-DECLARE_CVECTOR(cl_command_queue)
-DECLARE_CVECTOR(cl_command)
+#include <container/inc/cvector.h>
 
 struct _cl_device_id {
   cl_context            context;
 };
+
+#ifndef DECLARE_CVECTOR_TYPE_FOR_CL_COMMAND_QUEUE
+#define DECLARE_CVECTOR_TYPE_FOR_CL_COMMAND_QUEUE
+DECLARE_CVECTOR_TYPE(cl_command_queue)
+#endif
+
+#ifndef DECLARE_CVECTOR_TYPE_FOR_CL_COMMAND
+#define DECLARE_CVECTOR_TYPE_FOR_CL_COMMAND
+DECLARE_CVECTOR_TYPE(cl_command)
+#endif
+
+#ifndef DECLARE_CVECTOR_TYPE_FOR_CL_MEM
+#define DECLARE_CVECTOR_TYPE_FOR_CL_MEM
+DECLARE_CVECTOR_TYPE(cl_mem)
+#endif
 
 struct _cl_context {
   logging_fn                  pfn_notify;
@@ -34,8 +45,9 @@ struct _cl_context {
   cl_uint                     ref_count;
   cl_uint                     num_devices;
   cl_device_id *              devices;
-  cvector_cl_command_queue *  command_queues;
-  cvector_cl_mem           *  mem_objs;
+  
+  CVECTOR_TYPE(cl_command_queue)  command_queues;
+  CVECTOR_TYPE(cl_mem)            mem_objs;
 };
 
 struct _cl_command {
@@ -116,7 +128,8 @@ struct _cl_command_queue {
   cl_bool               enable_profiling;
   cl_uint               ref_count;
   cl_device_id          device;
-  cvector_cl_command *  commands;
+  
+  CVECTOR_TYPE(cl_command) commands;
 };
 
 struct _cl_mem {

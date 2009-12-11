@@ -1,4 +1,4 @@
-/* zocle — Z OpenCL Environment
+/* zocle - Z OpenCL Environment
  * Copyright (C) 2009 Wei Hu <wei.hu.tw@gmail.com>
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -14,10 +14,17 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+#include <zocle_config.h>
+
 #include <cl.h>
 
-#include <osal.h>
+#include <osal/inc/osal.h>
 #include <cl_internal.h>
+
+#ifndef DEFINE_CVECTOR_TYPE_FOR_CL_COMMAND
+#define DEFINE_CVECTOR_TYPE_FOR_CL_COMMAND
+DEFINE_CVECTOR_TYPE(cl_command)
+#endif
 
 CL_API_ENTRY cl_int CL_API_CALL
 clRetainMemObject(cl_mem memobj) CL_API_SUFFIX__VERSION_1_0 {
@@ -89,7 +96,7 @@ clCheckMemoryObjectFlags(cl_mem       mem,
     mem->mem_ptr = host_ptr;
   }
   if (flags & CL_MEM_ALLOC_HOST_PTR) {
-    mem->mem_ptr = clOsalCalloc(size);
+    mem->mem_ptr = CL_OSAL_CALLOC(size);
     if (NULL == mem->mem_ptr) {
       return_code = CL_MEM_OBJECT_ALLOCATION_FAILURE;
       goto error;
@@ -101,7 +108,7 @@ clCheckMemoryObjectFlags(cl_mem       mem,
       goto error;
     }
     if (NULL == mem->mem_ptr) {
-      mem->mem_ptr = clOsalCalloc(size);
+      mem->mem_ptr = CL_OSAL_CALLOC(size);
       if (NULL == mem->mem_ptr) {
         return_code = CL_MEM_OBJECT_ALLOCATION_FAILURE;
         goto error;
@@ -112,7 +119,7 @@ clCheckMemoryObjectFlags(cl_mem       mem,
   
  error:
   if ((mem != NULL) && (mem->mem_ptr != NULL)) {
-    clOsalFree(mem->mem_ptr);
+    CL_OSAL_FREE(mem->mem_ptr);
     mem->mem_ptr = NULL;
   }
   if (errcode_ret != NULL) {
@@ -177,7 +184,7 @@ clEnqueueCopyBetweenImageAndBuffer(cl_command_type  command_type,
       goto error;
     }
   }
-  cmd = clOsalCalloc(sizeof(struct _cl_command));
+  cmd = CL_OSAL_CALLOC(sizeof(struct _cl_command));
   if (NULL == cmd) {
     return_code = CL_OUT_OF_HOST_MEMORY;
     goto error;
@@ -190,7 +197,7 @@ clEnqueueCopyBetweenImageAndBuffer(cl_command_type  command_type,
   cmd->u._cl_copy_between_image_and_buffer_command.buffer = buffer;
   
   if (event != NULL) {
-    event_allocated = clOsalCalloc(sizeof(struct _cl_event));
+    event_allocated = CL_OSAL_CALLOC(sizeof(struct _cl_event));
     if (NULL == event_allocated) {
       return_code = CL_OUT_OF_HOST_MEMORY;
       goto error;
@@ -199,18 +206,18 @@ clEnqueueCopyBetweenImageAndBuffer(cl_command_type  command_type,
     (*event) = event_allocated;
   }
   
-  cvector_cl_command_push_back(command_queue->commands, cmd);
+  CVECTOR_PUSH_BACK(cl_command)(command_queue->commands, &cmd);
   cmd->execution_status = CL_QUEUED;
   
   goto success;
   
  error:
   if (cmd != NULL) {
-    clOsalFree(cmd);
+    CL_OSAL_FREE(cmd);
     cmd = NULL;
   }
   if (event_allocated != NULL) {
-    clOsalFree(event_allocated);
+    CL_OSAL_FREE(event_allocated);
     event_allocated = NULL;
   }
   
@@ -303,7 +310,7 @@ clEnqueueUnmapMemObject(cl_command_queue  command_queue,
       goto error;
     }
   }
-  cmd = clOsalCalloc(sizeof(struct _cl_command));
+  cmd = CL_OSAL_CALLOC(sizeof(struct _cl_command));
   if (NULL == cmd) {
     return_code = CL_OUT_OF_HOST_MEMORY;
     goto error;
@@ -315,7 +322,7 @@ clEnqueueUnmapMemObject(cl_command_queue  command_queue,
   cmd->u._cl_unmap_memobj_command.memobj = memobj;
   
   if (event != NULL) {
-    event_allocated = clOsalCalloc(sizeof(struct _cl_event));
+    event_allocated = CL_OSAL_CALLOC(sizeof(struct _cl_event));
     if (NULL == event_allocated) {
       return_code = CL_OUT_OF_HOST_MEMORY;
       goto error;
@@ -324,18 +331,18 @@ clEnqueueUnmapMemObject(cl_command_queue  command_queue,
     (*event) = event_allocated;
   }
   
-  cvector_cl_command_push_back(command_queue->commands, cmd);
+  CVECTOR_PUSH_BACK(cl_command)(command_queue->commands, &cmd);
   cmd->execution_status = CL_QUEUED;
   
   goto success;
   
  error:
   if (cmd != NULL) {
-    clOsalFree(cmd);
+    CL_OSAL_FREE(cmd);
     cmd = NULL;
   }
   if (event_allocated != NULL) {
-    clOsalFree(event_allocated);
+    CL_OSAL_FREE(event_allocated);
     event_allocated = NULL;
   }
   

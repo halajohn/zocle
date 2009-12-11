@@ -1,2 +1,2 @@
 SRCS = \
-osal.c
+osal_mem.c

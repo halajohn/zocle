@@ -1,4 +1,4 @@
-/* zocle — Z OpenCL Environment
+/* zocle - Z OpenCL Environment
  * Copyright (C) 2009 Wei Hu <wei.hu.tw@gmail.com>
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -14,3 +14,34 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+#ifndef ZOCLE_UTIL_CHAR_H_
+#define ZOCLE_UTIL_CHAR_H_
+
+static inline cl_bool
+clUtilCharIsLowerCaseLetter(int c) {
+  return (c >= 'a' && c <= 'z');
+}
+
+static inline cl_bool
+clUtilCharIsUpperCaseLetter(int c) {
+  return (c >= 'A' && c <= 'Z');
+}
+
+static cl_bool
+clUtilCharIsHexdecimalDigit(int c) {
+  return (((c >= '0') && (c <= '9')) ||
+          ((c >= 'a') && (c <= 'f')) ||
+          ((c >= 'A') && (c <= 'F')));
+}
+
+static cl_bool
+clUtilCharIsDecimalDigit(int c) {
+  return ((c >= '0') && (c <= '9'));
+}
+
+static cl_bool
+clUtilCharIsOctalDigit(int c) {
+  return ((c >= '0') && (c <= '7'));
+}
+
+#endif

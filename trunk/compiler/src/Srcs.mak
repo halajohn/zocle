@@ -1,2 +1,5 @@
 SRCS = \
-cl.c
+main.c \
+option.c \
+error_msg.c \
+compiler.c

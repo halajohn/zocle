@@ -1,4 +1,4 @@
-/* zocle — Z OpenCL Environment
+/* zocle - Z OpenCL Environment
  * Copyright (C) 2009 Wei Hu <wei.hu.tw@gmail.com>
  * 
  * This program is free software: you can redistribute it and/or modify

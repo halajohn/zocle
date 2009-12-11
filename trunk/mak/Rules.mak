@@ -3,12 +3,12 @@ SHARED_OBJS = $(patsubst %c,%shared_o,$(SRCS))
 OBJS_FIND_FROM_HERE_RECURSIVELY := $(foreach dir, $(SUB_DIRS), $(wildcard $(dir)/*.o))
 SHARED_OBJS_FIND_FROM_HERE_RECURSIVELY := $(foreach dir, $(SUB_DIRS), $(wildcard $(dir)/*.shared_o))
 
-INCLUDE += -I$(PROJECT_ROOT_DIR) -I$(PROJECT_ROOT_DIR)/util/inc
+INCLUDE += -I$(PROJECT_ROOT_DIR)
 
 ifdef WIN32
 ifeq ($(strip $(WIN32)),TRUE)
 DEFINE += -DWIN32
-DEFINE_FOR_SHARED_OBJS +=
+DEFINE_FOR_SHARED_OBJS += -DWIN32
 endif
 endif
 
@@ -66,13 +66,13 @@ install_subdir:
 		cd ..; \
 	done
 
-.o.depend: $(SRCS)
+.o.depend: $(SRCS) $(PROJECT_ROOT_DIR)/mak/Rules.mak $(PROJECT_ROOT_DIR)/mak/UserDefine.mak
 	@echo "=================================================="
 	@echo "   Checking dependencies..."
 	@echo "=================================================="
 	@$(CC) $(CFLAGS_FOR_OBJS) -M $(SRCS) > $@
 
-.shared_o.depend: $(SRCS)
+.shared_o.depend: $(SRCS) $(PROJECT_ROOT_DIR)/mak/Rules.mak $(PROJECT_ROOT_DIR)/mak/UserDefine.mak
 	@echo "=================================================="
 	@echo "   Checking dependencies..."
 	@echo "=================================================="
@@ -80,13 +80,13 @@ install_subdir:
 	$(SED) 's,\($*\).o[ :]*,\1.shared_o : ,g' < $@.$$$$ > $@; \
 	$(RM) -f $@.$$$$
 
-%.o: %.c
+%.o: %.c $(PROJECT_ROOT_DIR)/mak/Rules.mak $(PROJECT_ROOT_DIR)/mak/UserDefine.mak
 	@echo "Compile $<..."
-	@$(CC) $(CFLAGS_FOR_OBJS) -Wall -g3 -c -o $@ $<
+	@$(CC) $(CFLAGS_FOR_OBJS) -Wall -Wno-unused-function -g3 -gdwarf-2 -c -o $@ $<
 
-%.shared_o: %.c
+%.shared_o: %.c $(PROJECT_ROOT_DIR)/mak/Rules.mak $(PROJECT_ROOT_DIR)/mak/UserDefine.mak
 	@echo "Compile $<..."
-	@$(CC) $(CFLAGS_FOR_SHARED_OBJS) -fPIC -Wall -g3 -c -o $@ $<
+	@$(CC) $(CFLAGS_FOR_SHARED_OBJS) -fPIC -Wall -Wno-unused-function -g3 -gdwarf-2 -c -o $@ $<
 
 .libs/lib$(MODULE).so.$(MAJOR_VERSION).$(MINOR_VERSION): $(SHARED_OBJS_FIND_FROM_HERE_RECURSIVELY)
 	@echo "=================================================="
@@ -103,6 +103,13 @@ install_subdir:
 	@echo "=================================================="
 	@$(MKDIR) -p .libs
 	@$(AR) -ru .libs/lib$(MODULE).a $(OBJS_FIND_FROM_HERE_RECURSIVELY)
+
+module_executable: $(OBJS_FIND_FROM_HERE_RECURSIVELY)
+	@echo "=================================================="
+	@echo "   Creating $(MODULE)..."
+	@echo "=================================================="
+	@$(MKDIR) -p .bin
+	@$(CC) -o .bin/$(MODULE) $(OBJS_FIND_FROM_HERE_RECURSIVELY) $(LIBS)
 
 clean_objs:
 	@$(RM) -f $(OBJS) $(SHARED_OBJS) *~ *.bak .o.depend .shared_o.depend

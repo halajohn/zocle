@@ -1,4 +1,4 @@
-/* zocle — Z OpenCL Environment
+/* zocle - Z OpenCL Environment
  * Copyright (C) 2009 Wei Hu <wei.hu.tw@gmail.com>
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -40,11 +40,7 @@
 #ifndef __OPENCL_CL_H
 #define __OPENCL_CL_H
 
-#ifdef __APPLE__
-#include <OpenCL/cl_platform.h>
-#else
 #include <CL/cl_platform.h>
-#endif 
 
 #ifdef __cplusplus
 extern "C" {
@@ -65,7 +61,10 @@ typedef struct _cl_kernel *         cl_kernel;
 typedef struct _cl_event *          cl_event;
 typedef struct _cl_sampler *        cl_sampler;
 
-typedef cl_uint             cl_bool;                     /* WARNING!  Unlike cl_ types in cl_platform.h, cl_bool is not guaranteed to be the same size as the bool in kernels. */ 
+/* WARNING!
+ * Unlike cl_ types in cl_platform.h, cl_bool is not guaranteed to be
+ * the same size as the bool in kernels. */ 
+typedef cl_uint             cl_bool;
 typedef cl_ulong            cl_bitfield;
 typedef cl_bitfield         cl_device_type;
 typedef cl_uint             cl_platform_info;
@@ -685,7 +684,7 @@ clGetEventProfilingInfo(cl_event            /* event */,
                         size_t              /* param_value_size */,
                         void *              /* param_value */,
                         size_t *            /* param_value_size_ret */) CL_API_SUFFIX__VERSION_1_0;
-                                
+
 // Flush and Finish APIs
 extern CL_API_ENTRY cl_int CL_API_CALL
 clFlush(cl_command_queue /* command_queue */) CL_API_SUFFIX__VERSION_1_0;

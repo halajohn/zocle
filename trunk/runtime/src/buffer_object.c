@@ -1,4 +1,4 @@
-/* zocle — Z OpenCL Environment
+/* zocle - Z OpenCL Environment
  * Copyright (C) 2009 Wei Hu <wei.hu.tw@gmail.com>
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -14,10 +14,22 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+#include <zocle_config.h>
+
 #include <cl.h>
 
-#include <osal.h>
+#include <osal/inc/osal.h>
 #include <cl_internal.h>
+
+#ifndef DEFINE_CVECTOR_TYPE_FOR_CL_MEM
+#define DEFINE_CVECTOR_TYPE_FOR_CL_MEM
+DEFINE_CVECTOR_TYPE(cl_mem)
+#endif
+
+#ifndef DEFINE_CVECTOR_TYPE_FOR_CL_COMMAND
+#define DEFINE_CVECTOR_TYPE_FOR_CL_COMMAND
+DEFINE_CVECTOR_TYPE(cl_command)
+#endif
 
 CL_API_ENTRY cl_mem CL_API_CALL
 clCreateBuffer(cl_context   context,
@@ -44,13 +56,15 @@ clCreateBuffer(cl_context   context,
                                           sizeof(max_mem_alloc_size),
                                           &max_mem_alloc_size,
                                           NULL);
-    ASSERT(CL_SUCCESS == result);
+    if (result != CL_SUCCESS) {
+      ASSERT(0);
+    }
     if (size > max_mem_alloc_size) {
       return_code = CL_INVALID_BUFFER_SIZE;
       goto error;
     }
   }
-  mem = clOsalCalloc(sizeof(struct _cl_mem));
+  mem = CL_OSAL_CALLOC(sizeof(struct _cl_mem));
   if (NULL == mem) {
     return_code = CL_OUT_OF_HOST_MEMORY;
     goto error;
@@ -67,7 +81,7 @@ clCreateBuffer(cl_context   context,
     goto error;
   }
   {
-    cl_int const result = cvector_cl_mem_push_back(context->mem_objs, mem);
+    cl_int const result = CVECTOR_PUSH_BACK(cl_mem)(context->mem_objs, &mem);
     switch (result) {
     case CL_SUCCESS:
       break;
@@ -83,11 +97,11 @@ clCreateBuffer(cl_context   context,
   
  error:
   if ((mem != NULL) && (mem->mem_ptr != NULL)) {
-    clOsalFree(mem->mem_ptr);
+    CL_OSAL_FREE(mem->mem_ptr);
     mem->mem_ptr = NULL;
   }
   if (mem != NULL) {
-    clOsalFree(mem);
+    CL_OSAL_FREE(mem);
     mem = NULL;
   }
   
@@ -159,7 +173,7 @@ clEnqueueReadWriteBuffer(cl_command_type     command_type,
       goto error;
     }
   }
-  cmd = clOsalCalloc(sizeof(struct _cl_command));
+  cmd = CL_OSAL_CALLOC(sizeof(struct _cl_command));
   if (NULL == cmd) {
     return_code = CL_OUT_OF_HOST_MEMORY;
     goto error;
@@ -187,7 +201,7 @@ clEnqueueReadWriteBuffer(cl_command_type     command_type,
   }
   
   if (event != NULL) {
-    event_allocated = clOsalCalloc(sizeof(struct _cl_event));
+    event_allocated = CL_OSAL_CALLOC(sizeof(struct _cl_event));
     if (NULL == event_allocated) {
       return_code = CL_OUT_OF_HOST_MEMORY;
       goto error;
@@ -196,7 +210,7 @@ clEnqueueReadWriteBuffer(cl_command_type     command_type,
     (*event) = event_allocated;
   }
   
-  cvector_cl_command_push_back(command_queue->commands, cmd);
+  CVECTOR_PUSH_BACK(cl_command)(command_queue->commands, &cmd);
   cmd->execution_status = CL_QUEUED;
   
   if (CL_TRUE == blocking) {
@@ -211,11 +225,11 @@ clEnqueueReadWriteBuffer(cl_command_type     command_type,
   
  error:
   if (cmd != NULL) {
-    clOsalFree(cmd);
+    CL_OSAL_FREE(cmd);
     cmd = NULL;
   }
   if (event_allocated != NULL) {
-    clOsalFree(event_allocated);
+    CL_OSAL_FREE(event_allocated);
     event_allocated = NULL;
   }
   
@@ -321,7 +335,7 @@ clEnqueueCopyBuffer(cl_command_queue    command_queue,
       goto error;
     }
   }
-  cmd = clOsalCalloc(sizeof(struct _cl_command));
+  cmd = CL_OSAL_CALLOC(sizeof(struct _cl_command));
   if (NULL == cmd) {
     return_code = CL_OUT_OF_HOST_MEMORY;
     goto error;
@@ -337,7 +351,7 @@ clEnqueueCopyBuffer(cl_command_queue    command_queue,
   cmd->u._cl_copy_buffer_command.cb = cb;
   
   if (event != NULL) {
-    event_allocated = clOsalCalloc(sizeof(struct _cl_event));
+    event_allocated = CL_OSAL_CALLOC(sizeof(struct _cl_event));
     if (NULL == event_allocated) {
       return_code = CL_OUT_OF_HOST_MEMORY;
       goto error;
@@ -346,18 +360,18 @@ clEnqueueCopyBuffer(cl_command_queue    command_queue,
     (*event) = event_allocated;
   }
   
-  cvector_cl_command_push_back(command_queue->commands, cmd);
+  CVECTOR_PUSH_BACK(cl_command)(command_queue->commands, &cmd);
   cmd->execution_status = CL_QUEUED;
   
   goto success;
   
  error:
   if (cmd != NULL) {
-    clOsalFree(cmd);
+    CL_OSAL_FREE(cmd);
     cmd = NULL;
   }
   if (event_allocated != NULL) {
-    clOsalFree(event_allocated);
+    CL_OSAL_FREE(event_allocated);
     event_allocated = NULL;
   }
   
@@ -415,7 +429,7 @@ clEnqueueMapBuffer(cl_command_queue command_queue,
       goto error;
     }
   }
-  cmd = clOsalCalloc(sizeof(struct _cl_command));
+  cmd = CL_OSAL_CALLOC(sizeof(struct _cl_command));
   if (NULL == cmd) {
     return_code = CL_OUT_OF_HOST_MEMORY;
     goto error;
@@ -427,7 +441,7 @@ clEnqueueMapBuffer(cl_command_queue command_queue,
   cmd->u._cl_map_buffer_command.buffer = buffer;
   
   if (event != NULL) {
-    event_allocated = clOsalCalloc(sizeof(struct _cl_event));
+    event_allocated = CL_OSAL_CALLOC(sizeof(struct _cl_event));
     if (NULL == event_allocated) {
       return_code = CL_OUT_OF_HOST_MEMORY;
       goto error;
@@ -436,7 +450,7 @@ clEnqueueMapBuffer(cl_command_queue command_queue,
     (*event) = event_allocated;
   }
   
-  cvector_cl_command_push_back(command_queue->commands, cmd);
+  CVECTOR_PUSH_BACK(cl_command)(command_queue->commands, &cmd);
   cmd->execution_status = CL_QUEUED;
   
   if (CL_TRUE == blocking_map) {
@@ -451,11 +465,11 @@ clEnqueueMapBuffer(cl_command_queue command_queue,
   
  error:
   if (cmd != NULL) {
-    clOsalFree(cmd);
+    CL_OSAL_FREE(cmd);
     cmd = NULL;
   }
   if (event_allocated != NULL) {
-    clOsalFree(event_allocated);
+    CL_OSAL_FREE(event_allocated);
     event_allocated = NULL;
   }
   

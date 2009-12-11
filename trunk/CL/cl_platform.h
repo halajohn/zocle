@@ -1,4 +1,4 @@
-/* zocle — Z OpenCL Environment
+/* zocle - Z OpenCL Environment
  * Copyright (C) 2009 Wei Hu <wei.hu.tw@gmail.com>
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -40,11 +40,6 @@
 #ifndef __CL_PLATFORM_H
 #define __CL_PLATFORM_H
 
-#ifdef __APPLE__
-/* Contains #defines for AVAILABLE_MAC_OS_X_VERSION_10_6_AND_LATER below */
-#include <AvailabilityMacros.h>
-#endif
-
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -52,13 +47,15 @@ extern "C" {
 }
 #endif
 
+#ifdef _MSC_VER
+#define inline __inline
+#define strtold (long double)strtod
+#define strtof (float)strtod
+#endif
+
 #define CL_API_ENTRY
 #define CL_API_CALL
-#ifdef __APPLE__
-#define CL_API_SUFFIX__VERSION_1_0   AVAILABLE_MAC_OS_X_VERSION_10_6_AND_LATER
-#else
 #define CL_API_SUFFIX__VERSION_1_0
-#endif
 
 #include <stdint.h>
 #include <stddef.h>
@@ -66,16 +63,16 @@ extern "C" {
 /* scalar types  */
 typedef int8_t          cl_char;
 typedef uint8_t         cl_uchar;
-typedef int16_t         cl_short    __attribute__((aligned(2)));
-typedef uint16_t        cl_ushort   __attribute__((aligned(2)));
-typedef int32_t         cl_int      __attribute__((aligned(4)));
-typedef uint32_t        cl_uint     __attribute__((aligned(4)));
-typedef int64_t         cl_long     __attribute__((aligned(8)));
-typedef uint64_t        cl_ulong    __attribute__((aligned(8)));
+typedef int16_t         cl_short;
+typedef uint16_t        cl_ushort;
+typedef int32_t         cl_int;
+typedef uint32_t        cl_uint;
+typedef int64_t         cl_long;
+typedef uint64_t        cl_ulong;
 
-typedef uint16_t        cl_half     __attribute__((aligned(2)));
-typedef float           cl_float    __attribute__((aligned(4)));
-typedef double          cl_double   __attribute__((aligned(8)));
+typedef uint16_t        cl_half;
+typedef float           cl_float;
+typedef double          cl_double;
 
 /* and a few goodies to go with them */
 #define CL_CHAR_BIT         8
@@ -131,51 +128,51 @@ typedef double          cl_double   __attribute__((aligned(8)));
  *
  *          Maintaining proper alignment is the user's responsibility.
  */
-typedef int8_t          cl_char2[2]     __attribute__((aligned(2)));
-typedef int8_t          cl_char4[4]     __attribute__((aligned(4)));
-typedef int8_t          cl_char8[8]     __attribute__((aligned(8)));
-typedef int8_t          cl_char16[16]   __attribute__((aligned(16)));
-typedef uint8_t         cl_uchar2[2]    __attribute__((aligned(2)));
-typedef uint8_t         cl_uchar4[4]    __attribute__((aligned(4)));
-typedef uint8_t         cl_uchar8[8]    __attribute__((aligned(8)));
-typedef uint8_t         cl_uchar16[16]  __attribute__((aligned(16)));
+typedef int8_t          cl_char2[2];
+typedef int8_t          cl_char4[4];
+typedef int8_t          cl_char8[8];
+typedef int8_t          cl_char16[16];
+typedef uint8_t         cl_uchar2[2];
+typedef uint8_t         cl_uchar4[4];
+typedef uint8_t         cl_uchar8[8];
+typedef uint8_t         cl_uchar16[16];
 
-typedef int16_t         cl_short2[2]     __attribute__((aligned(4)));
-typedef int16_t         cl_short4[4]     __attribute__((aligned(8)));
-typedef int16_t         cl_short8[8]     __attribute__((aligned(16)));
-typedef int16_t         cl_short16[16]   __attribute__((aligned(32)));
-typedef uint16_t        cl_ushort2[2]    __attribute__((aligned(4)));
-typedef uint16_t        cl_ushort4[4]    __attribute__((aligned(8)));
-typedef uint16_t        cl_ushort8[8]    __attribute__((aligned(16)));
-typedef uint16_t        cl_ushort16[16]  __attribute__((aligned(32)));
+typedef int16_t         cl_short2[2];
+typedef int16_t         cl_short4[4];
+typedef int16_t         cl_short8[8];
+typedef int16_t         cl_short16[16];
+typedef uint16_t        cl_ushort2[2];
+typedef uint16_t        cl_ushort4[4];
+typedef uint16_t        cl_ushort8[8];
+typedef uint16_t        cl_ushort16[16];
 
-typedef int32_t         cl_int2[2]      __attribute__((aligned(8)));
-typedef int32_t         cl_int4[4]      __attribute__((aligned(16)));
-typedef int32_t         cl_int8[8]      __attribute__((aligned(32)));
-typedef int32_t         cl_int16[16]    __attribute__((aligned(64)));
-typedef uint32_t        cl_uint2[2]     __attribute__((aligned(8)));
-typedef uint32_t        cl_uint4[4]     __attribute__((aligned(16)));
-typedef uint32_t        cl_uint8[8]     __attribute__((aligned(32)));
-typedef uint32_t        cl_uint16[16]   __attribute__((aligned(64)));
+typedef int32_t         cl_int2[2];
+typedef int32_t         cl_int4[4];
+typedef int32_t         cl_int8[8];
+typedef int32_t         cl_int16[16];
+typedef uint32_t        cl_uint2[2];
+typedef uint32_t        cl_uint4[4];
+typedef uint32_t        cl_uint8[8];
+typedef uint32_t        cl_uint16[16];
 
-typedef int64_t         cl_long2[2]     __attribute__((aligned(16)));
-typedef int64_t         cl_long4[4]     __attribute__((aligned(32)));
-typedef int64_t         cl_long8[8]     __attribute__((aligned(64)));
-typedef int64_t         cl_long16[16]   __attribute__((aligned(128)));
-typedef uint64_t        cl_ulong2[2]    __attribute__((aligned(16)));
-typedef uint64_t        cl_ulong4[4]    __attribute__((aligned(32)));
-typedef uint64_t        cl_ulong8[8]    __attribute__((aligned(64)));
-typedef uint64_t        cl_ulong16[16]  __attribute__((aligned(128)));
+typedef int64_t         cl_long2[2];
+typedef int64_t         cl_long4[4];
+typedef int64_t         cl_long8[8];
+typedef int64_t         cl_long16[16];
+typedef uint64_t        cl_ulong2[2];
+typedef uint64_t        cl_ulong4[4];
+typedef uint64_t        cl_ulong8[8];
+typedef uint64_t        cl_ulong16[16];
 
-typedef float           cl_float2[2]    __attribute__((aligned(8)));
-typedef float           cl_float4[4]    __attribute__((aligned(16)));
-typedef float           cl_float8[8]    __attribute__((aligned(32)));
-typedef float           cl_float16[16]  __attribute__((aligned(64)));
+typedef float           cl_float2[2];
+typedef float           cl_float4[4];
+typedef float           cl_float8[8];
+typedef float           cl_float16[16];
 
-typedef double          cl_double2[2]   __attribute__((aligned(16)));
-typedef double          cl_double4[4]   __attribute__((aligned(32)));
-typedef double          cl_double8[8]   __attribute__((aligned(64)));
-typedef double          cl_double16[16] __attribute__((aligned(128)));
+typedef double          cl_double2[2];
+typedef double          cl_double4[4];
+typedef double          cl_double8[8];
+typedef double          cl_double16[16];
 
 /* There are no vector types for half */
 

@@ -1,4 +1,4 @@
-/* zocle — Z OpenCL Environment
+/* zocle - Z OpenCL Environment
  * Copyright (C) 2009 Wei Hu <wei.hu.tw@gmail.com>
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -14,9 +14,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+#include <zocle_config.h>
+
 #include <cl.h>
 
-#include <osal.h>
+#include <osal/inc/osal.h>
 #include <cl_internal.h>
 
 CL_API_ENTRY cl_program CL_API_CALL
@@ -68,7 +70,7 @@ clCreateProgramWithSource(cl_context        context,
     return_code = CL_INVALID_OPERATION;
     goto error;
   }
-  program = clOsalCalloc(sizeof(struct _cl_program));
+  program = CL_OSAL_CALLOC(sizeof(struct _cl_program));
   if (NULL == program) {
     return_code = CL_OUT_OF_HOST_MEMORY;
     goto error;
@@ -80,7 +82,7 @@ clCreateProgramWithSource(cl_context        context,
   
  error:
   if (program != NULL) {
-    clOsalFree(program);
+    CL_OSAL_FREE(program);
     program = NULL;
   }
   
@@ -130,7 +132,7 @@ clCreateProgramWithBinary(cl_context            context,
     }
   }
   /* TODO: handle CL_INVALID_BINARY */
-  program = clOsalCalloc(sizeof(struct _cl_program));
+  program = CL_OSAL_CALLOC(sizeof(struct _cl_program));
   if (NULL == program) {
     return_code = CL_OUT_OF_HOST_MEMORY;
     goto error;
@@ -142,7 +144,7 @@ clCreateProgramWithBinary(cl_context            context,
   
  error:
   if (program != NULL) {
-    clOsalFree(program);
+    CL_OSAL_FREE(program);
     program = NULL;
   }
   

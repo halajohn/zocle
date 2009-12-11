@@ -1,4 +1,4 @@
-/* zocle — Z OpenCL Environment
+/* zocle - Z OpenCL Environment
  * Copyright (C) 2009 Wei Hu <wei.hu.tw@gmail.com>
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -14,12 +14,24 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+#include <zocle_config.h>
+
 #include <cl.h>
 
 #include <string.h>
 
-#include <osal.h>
+#include <osal/inc/osal.h>
 #include <cl_internal.h>
+
+#ifndef DEFINE_CVECTOR_TYPE_FOR_CL_COMMAND_QUEUE
+#define DEFINE_CVECTOR_TYPE_FOR_CL_COMMAND_QUEUE
+DEFINE_CVECTOR_TYPE(cl_command_queue)
+#endif
+
+#ifndef DEFINE_CVECTOR_TYPE_FOR_CL_MEM
+#define DEFINE_CVECTOR_TYPE_FOR_CL_MEM
+DEFINE_CVECTOR_TYPE(cl_mem)
+#endif
 
 static cl_int
 clInitContext(cl_context  context,
@@ -29,14 +41,14 @@ clInitContext(cl_context  context,
   context->pfn_notify = pfn_notify;
   context->user_data = user_data;
   
-  context->command_queues = cvector_cl_command_queue_new();
+  context->command_queues = CVECTOR_NEW(cl_command_queue)(0);
   if (NULL == context->command_queues) {
     return CL_OUT_OF_HOST_MEMORY;
   }
   
-  context->mem_objs = cvector_cl_mem_new();
+  context->mem_objs = CVECTOR_NEW(cl_mem)(0);
   if (NULL == context->mem_objs) {
-    clOsalFree(context->command_queues);
+    CVECTOR_DELETE(cl_command_queue)(context->command_queues);
     return CL_OUT_OF_HOST_MEMORY;
   }
   return CL_SUCCESS;
@@ -63,12 +75,12 @@ clCreateContext(cl_context_properties * properties,
    * CL_DEVICE_NOT_AVAILABLE
    */
   
-  context = clOsalCalloc(sizeof(struct _cl_context));
+  context = CL_OSAL_CALLOC(sizeof(struct _cl_context));
   if (NULL == context) {
     return_code = CL_OUT_OF_HOST_MEMORY;
     goto error;
   }
-  context->devices = clOsalCalloc(num_devices * sizeof(cl_device_id));
+  context->devices = CL_OSAL_CALLOC(num_devices * sizeof(cl_device_id));
   if (NULL == context->devices) {
     return_code = CL_OUT_OF_HOST_MEMORY;
     goto error;
@@ -93,7 +105,7 @@ clCreateContext(cl_context_properties * properties,
   
  error:
   if (context != NULL) {
-    clOsalFree(context);
+    CL_OSAL_FREE(context);
     context = NULL;
   }
   
@@ -132,19 +144,19 @@ clCreateContextFromType(cl_context_properties * properties,
     break;
   }
   /* TODO: handle CL_DEVICE_NOT_AVAILABLE */
-  devices = clOsalCalloc(num_devices * sizeof(cl_device_id));
+  devices = CL_OSAL_CALLOC(num_devices * sizeof(cl_device_id));
   if (NULL == devices) {
     return_code = CL_OUT_OF_HOST_MEMORY;
     goto error;
   }
   result = clGetDeviceIDs(device_type, num_devices, devices, NULL);
   
-  context = clOsalCalloc(sizeof(struct _cl_context));
+  context = CL_OSAL_CALLOC(sizeof(struct _cl_context));
   if (NULL == context) {
     return_code = CL_OUT_OF_HOST_MEMORY;
     goto error;
   }
-  context->devices = clOsalCalloc(num_devices * sizeof(cl_device_id));
+  context->devices = CL_OSAL_CALLOC(num_devices * sizeof(cl_device_id));
   if (NULL == context->devices) {
     return_code = CL_OUT_OF_HOST_MEMORY;
     goto error;
@@ -169,11 +181,11 @@ clCreateContextFromType(cl_context_properties * properties,
   
  error:
   if (context != NULL) {
-    clOsalFree(context);
+    CL_OSAL_FREE(context);
     context = NULL;
   }
   if (devices != NULL) {
-    clOsalFree(devices);
+    CL_OSAL_FREE(devices);
     devices = NULL;
   }
   
@@ -200,16 +212,19 @@ clReleaseContext(cl_context context) CL_API_SUFFIX__VERSION_1_0 {
   }
   --context->ref_count;
   if (0 == context->ref_count) {
-    cl_command_queue *cmd_queue;
+    CVECTOR_ITER_TYPE(cl_command_queue) cmd_queue;
     
-    clOsalFree(context->devices);
-    for (cmd_queue = cvector_cl_command_queue_begin(context->command_queues);
-         cmd_queue != cvector_cl_command_queue_end(context->command_queues);
-         ++cmd_queue) {
-      clReleaseCommandQueue(*cmd_queue);
+    CL_OSAL_FREE(context->devices);
+    for (cmd_queue = CVECTOR_BEGIN(cl_command_queue)(
+             context->command_queues);
+         cmd_queue != CVECTOR_END(cl_command_queue)(
+             context->command_queues);
+         cmd_queue = CVECTOR_ITER_INCREMENT(cl_command_queue)(cmd_queue)) {
+      clReleaseCommandQueue(
+          *CVECTOR_ITER_GET_DATA(cl_command_queue)(cmd_queue));
     }
     /* TODO: release memory object */
-    clOsalFree(context);
+    CL_OSAL_FREE(context);
   }
   return CL_SUCCESS;
 }

@@ -1,2 +1,3 @@
 SRCS = \
-cvector.c
+math.c \
+file.c

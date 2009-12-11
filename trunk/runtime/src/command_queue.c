@@ -1,4 +1,4 @@
-/* zocle — Z OpenCL Environment
+/* zocle - Z OpenCL Environment
  * Copyright (C) 2009 Wei Hu <wei.hu.tw@gmail.com>
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -14,16 +14,29 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+#include <zocle_config.h>
+
 #include <cl.h>
 
-#include <osal.h>
+#include <osal/inc/osal.h>
 #include <cl_internal.h>
 
+#ifndef DEFINE_CVECTOR_TYPE_FOR_CL_COMMAND
+#define DEFINE_CVECTOR_TYPE_FOR_CL_COMMAND
+DEFINE_CVECTOR_TYPE(cl_command)
+#endif
+
+#ifndef DEFINE_CVECTOR_TYPE_FOR_CL_COMMAND_QUEUE
+#define DEFINE_CVECTOR_TYPE_FOR_CL_COMMAND_QUEUE
+DEFINE_CVECTOR_TYPE(cl_command_queue)
+#endif
+
 CL_API_ENTRY cl_command_queue CL_API_CALL
-clCreateCommandQueue(cl_context                     context, 
-                     cl_device_id                   device, 
-                     cl_command_queue_properties    properties,
-                     cl_int *                       errcode_ret) CL_API_SUFFIX__VERSION_1_0 {
+clCreateCommandQueue(
+    cl_context                     context, 
+    cl_device_id                   device, 
+    cl_command_queue_properties    properties,
+    cl_int *                       errcode_ret) CL_API_SUFFIX__VERSION_1_0 {
   cl_command_queue command_queue = NULL;
   cl_uint i;
   cl_int return_code = CL_SUCCESS;
@@ -34,14 +47,15 @@ clCreateCommandQueue(cl_context                     context,
   }
   for (i = (context->num_devices - 1); i >= 0; --i) {
     if (context->devices[i] == device) {
-      command_queue = clOsalCalloc(sizeof(struct _cl_command_queue));
+      command_queue = CL_OSAL_CALLOC(sizeof(struct _cl_command_queue));
       if (NULL == command_queue) {
         return_code = CL_OUT_OF_HOST_MEMORY;
         goto error;
       }
       command_queue->context = context;
       command_queue->device = device;
-      if (properties & (CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE | CL_QUEUE_PROFILING_ENABLE)) {
+      if (properties & (CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE |
+                        CL_QUEUE_PROFILING_ENABLE)) {
         return_code = CL_INVALID_VALUE;
         goto error;
       }
@@ -53,14 +67,16 @@ clCreateCommandQueue(cl_context                     context,
         command_queue->enable_profiling = CL_TRUE;
         properties &= (~CL_QUEUE_PROFILING_ENABLE);
       }
-      command_queue->commands = cvector_cl_command_new();
+      command_queue->commands = CVECTOR_NEW(cl_command)(0);
       if (NULL == command_queue->commands) {
         return_code = CL_OUT_OF_HOST_MEMORY;
         goto error;
       }
       clRetainCommandQueue(command_queue);
       {
-        cl_int const result = cvector_cl_command_queue_push_back(context->command_queues, command_queue);
+        cl_int const result =
+          CVECTOR_PUSH_BACK(cl_command_queue)(context->command_queues,
+                                              &command_queue);
         switch (result) {
         case CL_SUCCESS:
           break;
@@ -76,11 +92,11 @@ clCreateCommandQueue(cl_context                     context,
   
  error:
   if ((command_queue != NULL) && (command_queue->commands != NULL)) {
-    clOsalFree(command_queue->commands);
+    CVECTOR_DELETE(cl_command)(command_queue->commands);
     command_queue->commands = NULL;
   }
   if (command_queue != NULL) {
-    clOsalFree(command_queue);
+    CL_OSAL_FREE(command_queue);
     command_queue = NULL;
   }
   return NULL;
