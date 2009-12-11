@@ -1,4 +1,4 @@
-/* zocle — Z OpenCL Environment
+/* zocle - Z OpenCL Environment
  * Copyright (C) 2009 Wei Hu <wei.hu.tw@gmail.com>
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -14,10 +14,17 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+#include <zocle_config.h>
+
 #include <cl.h>
 
-#include <osal.h>
+#include <osal/inc/osal.h>
 #include <cl_internal.h>
+
+#ifndef DEFINE_CVECTOR_TYPE_FOR_CL_COMMAND
+#define DEFINE_CVECTOR_TYPE_FOR_CL_COMMAND
+DEFINE_CVECTOR_TYPE(cl_command)
+#endif
 
 CL_API_ENTRY cl_kernel CL_API_CALL
 clCreateKernel(cl_program      program,
@@ -38,7 +45,7 @@ clCreateKernel(cl_program      program,
   /* TODO: handle CL_INVALID_KERNEL_NAME */
   /* TODO: handle CL_INVALID_KERNEL_DEFINITION */
   
-  kernel = clOsalCalloc(sizeof(struct _cl_kernel));
+  kernel = CL_OSAL_CALLOC(sizeof(struct _cl_kernel));
   if (NULL == kernel) {
     return_code = CL_OUT_OF_HOST_MEMORY;
     goto error;
@@ -49,7 +56,7 @@ clCreateKernel(cl_program      program,
   
  error:
   if (kernel != NULL) {
-    clOsalFree(kernel);
+    CL_OSAL_FREE(kernel);
     kernel = NULL;
   }
   
@@ -195,7 +202,7 @@ clEnqueueNDRangeKernel(cl_command_queue command_queue,
       goto error;
     }
   }
-  cmd = clOsalCalloc(sizeof(struct _cl_command));
+  cmd = CL_OSAL_CALLOC(sizeof(struct _cl_command));
   if (NULL == cmd) {
     return_code = CL_OUT_OF_HOST_MEMORY;
     goto error;
@@ -207,7 +214,7 @@ clEnqueueNDRangeKernel(cl_command_queue command_queue,
   cmd->u._cl_ndrange_kernel_command.kernel = kernel;
   
   if (event != NULL) {
-    event_allocated = clOsalCalloc(sizeof(struct _cl_event));
+    event_allocated = CL_OSAL_CALLOC(sizeof(struct _cl_event));
     if (NULL == event_allocated) {
       return_code = CL_OUT_OF_HOST_MEMORY;
       goto error;
@@ -216,18 +223,18 @@ clEnqueueNDRangeKernel(cl_command_queue command_queue,
     (*event) = event_allocated;
   }
   
-  cvector_cl_command_push_back(command_queue->commands, cmd);
+  CVECTOR_PUSH_BACK(cl_command)(command_queue->commands, &cmd);
   cmd->execution_status = CL_QUEUED;
   
   goto success;
   
  error:
   if (cmd != NULL) {
-    clOsalFree(cmd);
+    CL_OSAL_FREE(cmd);
     cmd = NULL;
   }
   if (event_allocated != NULL) {
-    clOsalFree(event_allocated);
+    CL_OSAL_FREE(event_allocated);
     event_allocated = NULL;
   }
   
@@ -269,7 +276,7 @@ clEnqueueTask(cl_command_queue  command_queue,
       goto error;
     }
   }
-  cmd = clOsalCalloc(sizeof(struct _cl_command));
+  cmd = CL_OSAL_CALLOC(sizeof(struct _cl_command));
   if (NULL == cmd) {
     return_code = CL_OUT_OF_HOST_MEMORY;
     goto error;
@@ -281,7 +288,7 @@ clEnqueueTask(cl_command_queue  command_queue,
   cmd->u._cl_task_command.kernel = kernel;
   
   if (event != NULL) {
-    event_allocated = clOsalCalloc(sizeof(struct _cl_event));
+    event_allocated = CL_OSAL_CALLOC(sizeof(struct _cl_event));
     if (NULL == event_allocated) {
       return_code = CL_OUT_OF_HOST_MEMORY;
       goto error;
@@ -290,18 +297,18 @@ clEnqueueTask(cl_command_queue  command_queue,
     (*event) = event_allocated;
   }
   
-  cvector_cl_command_push_back(command_queue->commands, cmd);
+  CVECTOR_PUSH_BACK(cl_command)(command_queue->commands, &cmd);
   cmd->execution_status = CL_QUEUED;
   
   goto success;
   
  error:
   if (cmd != NULL) {
-    clOsalFree(cmd);
+    CL_OSAL_FREE(cmd);
     cmd = NULL;
   }
   if (event_allocated != NULL) {
-    clOsalFree(event_allocated);
+    CL_OSAL_FREE(event_allocated);
     event_allocated = NULL;
   }
   
@@ -344,7 +351,7 @@ clEnqueueNativeKernel(cl_command_queue  command_queue,
       goto error;
     }
   }
-  cmd = clOsalCalloc(sizeof(struct _cl_command));
+  cmd = CL_OSAL_CALLOC(sizeof(struct _cl_command));
   if (NULL == cmd) {
     return_code = CL_OUT_OF_HOST_MEMORY;
     goto error;
@@ -356,7 +363,7 @@ clEnqueueNativeKernel(cl_command_queue  command_queue,
   cmd->u._cl_native_kernel_command.user_func = user_func;
   
   if (event != NULL) {
-    event_allocated = clOsalCalloc(sizeof(struct _cl_event));
+    event_allocated = CL_OSAL_CALLOC(sizeof(struct _cl_event));
     if (NULL == event_allocated) {
       return_code = CL_OUT_OF_HOST_MEMORY;
       goto error;
@@ -365,18 +372,18 @@ clEnqueueNativeKernel(cl_command_queue  command_queue,
     (*event) = event_allocated;
   }
   
-  cvector_cl_command_push_back(command_queue->commands, cmd);
+  CVECTOR_PUSH_BACK(cl_command)(command_queue->commands, &cmd);
   cmd->execution_status = CL_QUEUED;
   
   goto success;
   
  error:
   if (cmd != NULL) {
-    clOsalFree(cmd);
+    CL_OSAL_FREE(cmd);
     cmd = NULL;
   }
   if (event_allocated != NULL) {
-    clOsalFree(event_allocated);
+    CL_OSAL_FREE(event_allocated);
     event_allocated = NULL;
   }
   

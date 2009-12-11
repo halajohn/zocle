@@ -1,4 +1,4 @@
-/* zocle — Z OpenCL Environment
+/* zocle - Z OpenCL Environment
  * Copyright (C) 2009 Wei Hu <wei.hu.tw@gmail.com>
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -14,11 +14,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include <cvector_impl.h>
+#ifndef CL_COMPILER_MIDDLEEND_MIDDLEEND_H_
+#define CL_COMPILER_MIDDLEEND_MIDDLEEND_H_
 
-#include <cl.h>
-#include <osal.h>
+#include <compiler_middleend/inc/function.h>
 
-IMPLEMENT_CVECTOR(cl_mem);
-IMPLEMENT_CVECTOR(cl_command_queue);
-IMPLEMENT_CVECTOR(cl_command);
+struct _cl_compiler_middleend {
+  int dummy; /* remove it afterward. */
+};
+typedef struct _cl_compiler_middleend *cl_compiler_middleend;
+
+#endif

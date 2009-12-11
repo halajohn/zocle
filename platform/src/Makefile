@@ -1,7 +1,7 @@
 include ../../mak/UserDefine.mak
 include Srcs.mak
 
-INCLUDE += -I../inc -I../../osal/inc
+INCLUDE += -I../inc -I../../osal/inc -I../../container/inc
 
 all:
 	@make build_objs

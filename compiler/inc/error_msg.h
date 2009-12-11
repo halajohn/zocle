@@ -1,4 +1,4 @@
-/* zocle — Z OpenCL Environment
+/* zocle - Z OpenCL Environment
  * Copyright (C) 2009 Wei Hu <wei.hu.tw@gmail.com>
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -14,22 +14,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include <osal.h>
+#ifndef ZOCLE_COMPILER_ERROR_MSG_H_
+#define ZOCLE_COMPILER_ERROR_MSG_H_
 
-#include <stdlib.h>
+#include <compiler/inc/compiler.h>
+#include <compiler_frontend/inc/frontend.h>
 
-void *clOsalMalloc(size_t const size) {
-  return malloc(size);
-}
+extern void error(cl_compiler_frontend frontend, char const *fmt, ...);
+extern void expect(cl_compiler_frontend frontend, char const *msg);
+extern void warning(cl_compiler_frontend frontend, char const *fmt, ...);
 
-void *clOsalCalloc(size_t const size) {
-  void *ptr = malloc(size);
-  memset(ptr, 0, size);
-  return ptr;
-}
-
-void clOsalFree(void *ptr) {
-  if (ptr != NULL) {
-    free(ptr);
-  }
-}
+#endif
